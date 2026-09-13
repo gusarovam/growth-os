@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f5f5f2" />
+  <title>Growth OS</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside>
+      <div class="brand"><div class="logo">G</div><span>Growth OS</span></div>
+      <nav>
+        <button class="nav active" data-page="today">Today</button>
+        <button class="nav" data-page="calendar">Calendar</button>
+        <button class="nav" data-page="goals">Goals</button>
+        <button class="nav" data-page="focus">Focus</button>
+        <button class="nav" data-page="progress">Progress</button>
+        <button class="nav" data-page="coach">AI Coach</button>
+      </nav>
+      <div class="side-note"><b>6-month mode</b><span>Plan less. Start faster. Finish what matters.</span></div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <span class="eyebrow" id="dateLabel"></span>
+        <div class="top-actions"><span class="ai-status" id="aiStatus">AI ready when connected</span></div>
+      </header>
+
+      <section class="page active" id="today">
+        <div class="hero">
+          <div>
+            <span class="eyebrow">YOUR DAY</span>
+            <h1>Good morning.</h1>
+            <p class="quote" id="quote"></p>
+          </div>
+          <div class="ring" id="ring" data-value="0%"></div>
+        </div>
+
+        <div class="card big3">
+          <div class="section-head">
+            <div><span class="eyebrow">TODAY'S BIG 3</span><h2>Make today count</h2></div>
+            <span>◎</span>
+          </div>
+          <div class="big3-grid" id="big3"></div>
+        </div>
+
+        <div class="today-grid">
+          <div class="card">
+            <div class="section-head">
+              <div><span class="eyebrow">TIMELINE</span><h2>Your day by time</h2></div>
+              <button class="text-btn" id="goCalendar">Week view →</button>
+            </div>
+            <div class="timeline" id="timeline"></div>
+            <div class="inline-form">
+              <input id="eventTitle" placeholder="Add time block..." />
+              <input id="eventStart" type="time" value="14:00" />
+              <input id="eventEnd" type="time" value="14:30" />
+              <button class="primary" id="addEvent">+ Add</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="section-head">
+              <div><span class="eyebrow">TASKS</span><h2>Today</h2></div>
+              <span>✓</span>
+            </div>
+            <div id="tasks"></div>
+            <div class="quick-add"><input id="taskText" placeholder="Quick add task..." /><button id="addTask">+</button></div>
+            <div class="metrics">
+              <div class="metric-row"><span>Energy</span><b id="energyValue">3/5</b></div>
+              <input class="range" id="energy" type="range" min="1" max="5" value="3" />
+              <div class="metric-row"><span>Scroll budget</span><b id="scrollText"></b></div>
+              <input class="range" id="scrollUsed" type="range" min="0" max="120" step="5" />
+            </div>
+          </div>
+        </div>
+
+        <div class="card ai-panel">
+          <div class="section-head">
+            <div><span class="eyebrow">AI DAILY PLANNER</span><h2>Build a realistic day around your goals</h2></div>
+            <span>✦</span>
+          </div>
+          <textarea id="plannerText" placeholder="Example: I have 4 hours free today. I need BA study, English, workout and documents. My energy is low and I want to avoid TikTok until evening."></textarea>
+          <div class="action-row">
+            <button class="primary" id="buildPlan">✦ Build my plan</button>
+            <span class="hint">Uses your tasks, goals, energy and existing schedule.</span>
+          </div>
+          <div id="dailyPlanResult"></div>
+        </div>
+      </section>
+
+      <section class="page" id="calendar">
+        <div class="page-heading">
+          <span class="eyebrow">CALENDAR</span><h1>Your week, connected to your goals.</h1>
+          <p>Goal actions and daily plans land here, so long-term intentions become actual time blocks.</p>
+        </div>
+        <div class="calendar-toolbar">
+          <button class="secondary" id="prevWeek">← Previous</button>
+          <b id="weekLabel"></b>
+          <button class="secondary" id="nextWeek">Next →</button>
+        </div>
+        <div class="week-grid" id="weekGrid"></div>
+        <div class="card replan-card">
+          <div>
+            <span class="eyebrow">ADAPTIVE PLANNING</span>
+            <h2>Plans changed?</h2>
+            <p>AI can redistribute goal work across the next 7 days without stacking everything onto tomorrow.</p>
+          </div>
+          <button class="primary" id="replanWeek">✦ Replan my week</button>
+        </div>
+        <div id="replanResult"></div>
+      </section>
+
+      <section class="page" id="goals">
+        <div class="page-heading">
+          <span class="eyebrow">DREAM → PLAN</span><h1>Turn a wish into a calendar.</h1>
+          <p>Write the outcome you want. AI works backward from the deadline, creates milestones and schedules your first actions.</p>
+        </div>
+        <div class="dream-grid">
+          <div class="card goal-form">
+            <div class="section-head"><div><span class="eyebrow">NEW GOAL</span><h2>What do you want?</h2></div><span>✦</span></div>
+            <textarea id="wish" placeholder="I want to become a Business Analyst in 6 months..."></textarea>
+            <label>Deadline<input id="goalDeadline" type="date" /></label>
+            <div class="two-col">
+              <label>Intensity<select id="intensity"><option>Light</option><option selected>Balanced</option><option>Intensive</option></select></label>
+              <label>Hours / week<input id="hoursPerWeek" type="number" min="1" max="40" value="5" /></label>
+            </div>
+            <div class="two-col">
+              <label>Preferred time<select id="preferredTime"><option>Morning</option><option selected>Flexible</option><option>Afternoon</option><option>Evening</option></select></label>
+              <label>Day off<select id="dayOff"><option>None</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option selected>Sunday</option></select></label>
+            </div>
+            <button class="primary" id="breakGoal">✦ Break it into steps</button>
+          </div>
+          <div class="card" id="goalDraft"><div class="empty">Your AI milestone plan will appear here.</div></div>
+        </div>
+        <div class="goals-list" id="goalsList"></div>
+      </section>
+
+      <section class="page" id="focus">
+        <div class="page-heading">
+          <span class="eyebrow">FOCUS MODE</span><h1>One thing. No noise.</h1>
+          <p>Use a short protected session when motivation is low. If you are stuck, ask AI to make the first step smaller.</p>
+        </div>
+        <div class="focus-grid" id="focusList"></div>
+      </section>
+
+      <section class="page" id="progress">
+        <div class="page-heading"><span class="eyebrow">PROGRESS</span><h1>Evidence that you are moving.</h1><p>Track consistency, focus and goal movement—not perfect streaks.</p></div>
+        <div class="stats-grid" id="stats"></div>
+        <div class="card trajectory-card"><span class="eyebrow">6-MONTH TRAJECTORY</span><h2>Future self dashboard</h2><div id="trajectory"></div></div>
+        <div class="card history-card"><span class="eyebrow">LAST 7 DAYS</span><h2>Consistency snapshot</h2><div id="historyBars"></div></div>
+      </section>
+
+      <section class="page" id="coach">
+        <div class="page-heading"><span class="eyebrow">AI WEEKLY COACH</span><h1>Notice patterns. Adjust the system.</h1><p>Your coach uses completion, focus, goals, energy and scrolling to suggest a smaller, smarter next week.</p></div>
+        <div class="card coach-launch">
+          <div><span class="eyebrow">WEEKLY REVIEW</span><h2>Turn your data into a few useful rules.</h2></div>
+          <button class="primary" id="runCoach">✦ Analyze my week</button>
+        </div>
+        <div id="coachResult"></div>
+        <div class="card recovery"><span class="eyebrow">RECOVERY MODE</span><h2>Missed a few days?</h2><p>Forget the streak. Pick one meaningful thing and restart today.</p></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="overlay" id="focusOverlay">
+    <button class="overlay-close" id="closeFocus">×</button>
+    <div class="focus-core">
+      <span class="eyebrow">FOCUS SESSION</span>
+      <h1 id="focusTitle"></h1>
+      <div class="timer" id="timer">25:00</div>
+      <p>Don't think about the whole project. Just finish this session.</p>
+      <div class="focus-controls">
+        <button class="primary" id="startPause">Start</button>
+        <button class="secondary duration" data-min="10">10 min</button>
+        <button class="secondary duration" data-min="25">25 min</button>
+        <button class="secondary duration" data-min="50">50 min</button>
+      </div>
+      <div class="focus-actions">
+        <button class="secondary" id="rescueTask">✦ I'm procrastinating</button>
+        <button class="secondary" id="completeFocus">✓ Mark complete</button>
+      </div>
+      <div id="rescueResult"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
